@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.empresa.compras.frontend.LoginController"
+            prefWidth="300" prefHeight="200">
+    <children>
+        <VBox alignment="CENTER" spacing="10" layoutX="50" layoutY="30">
+            <Label text="Iniciar Sesión" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtUsuario" promptText="Usuario" />
+            <PasswordField fx:id="txtPassword" promptText="Contraseña" />
+            <Button text="Ingresar" onAction="#login" />
+            <Label fx:id="lblMensaje" textFill="red"/>
+        </VBox>
+    </children>
+</AnchorPane>

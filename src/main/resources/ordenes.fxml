@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.empresa.compras.frontend.OrdenesController">
+
+    <!-- Formulario de cabecera -->
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="Fecha:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dpFecha" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Usuario:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbUsuario" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Proveedor:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbProveedor" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Estado:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbEstado" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Observaciones:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtObservaciones" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="200"/>
+            </GridPane>
+
+            <!-- Detalles -->
+            <TitledPane text="Agregar Detalle" expanded="true">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+
+                    <GridPane hgap="10" vgap="10">
+                        <Label text="Insumo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="cmbInsumo" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Cantidad:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtCantidad" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Precio Unitario:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtPrecio" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <Button text="➕ Agregar Detalle" onAction="#agregarDetalle"/>
+                </VBox>
+            </TitledPane>
+        </VBox>
+    </top>
+
+    <!-- Tabla de detalles -->
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <TableView fx:id="tablaDetalles">
+                <columns>
+                    <TableColumn fx:id="colInsumo" text="Insumo" prefWidth="150"/>
+                    <TableColumn fx:id="colCantidad" text="Cantidad" prefWidth="80"/>
+                    <TableColumn fx:id="colPrecio" text="Precio Unitario" prefWidth="100"/>
+                    <TableColumn fx:id="colSubtotal" text="Subtotal" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <Label text="Órdenes existentes:" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="tablaOrdenes">
+                <columns>
+                    <TableColumn fx:id="colIdOrden" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="120"/>
+                    <TableColumn fx:id="colProveedor" text="Proveedor" prefWidth="150"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="100"/>
+                    <TableColumn fx:id="colObs" text="Observaciones" prefWidth="200"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Botones -->
+    <bottom>
+        <HBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Button text="💾 Crear Orden" onAction="#crearOrden"/>
+            <Button text="✏ Actualizar" onAction="#actualizarOrden"/>
+            <Button text="🗑 Eliminar" onAction="#eliminarOrden"/>
+            <Button text="🔄 Limpiar" onAction="#limpiarCampos"/>
+            <Button text="⬅ Atrás" onAction="#volverAlMenu"/>
+            <Label fx:id="lblMensaje" style="-fx-text-fill: green;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

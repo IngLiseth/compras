@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.empresa.compras.frontend.MainController">
+
+    <!-- Barra superior -->
+    <top>
+        <HBox spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <Label text="📦 Sistema de Compras"
+                   style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="Cerrar Sesión" fx:id="btnLogout"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+        </HBox>
+    </top>
+
+    <!-- Menú lateral -->
+    <left>
+        <VBox spacing="10" style="-fx-background-color: #34495e; -fx-padding: 15;"
+              prefWidth="200">
+            <Button text="👤 Usuarios" fx:id="btnUsuarios"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;"/>
+            <Button text="🛒 Orden de Compra" fx:id="btnOrdenes"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;"/>
+            <Button text="💳 Gestión de Pagos" fx:id="btnPagos"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;"/>
+            <Button text="📦 Recepciones" fx:id="btnRecepciones"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;"/>
+            <Button text="📊 Inventarios" fx:id="btnInventarios"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14;"/>
+        </VBox>
+    </left>
+
+    <!-- Área central para contenido dinámico -->
+    <center>
+        <StackPane fx:id="contentArea" alignment="CENTER">
+            <Label text="Bienvenido al Sistema de Compras"
+                   style="-fx-font-size: 18; -fx-text-fill: #2c3e50;"/>
+        </StackPane>
+    </center>
+
+</BorderPane>
