@@ -18,7 +18,5 @@ public class PagoRequestDTO {
     private LocalDate fecha;
     private Double montoTotal;
     private Long idOrden;
+    private List<PagoDetalleRequestDTO> detalles; // ✅ ESTO FALTA EN TU CÓDIGO
 }
-
-
-

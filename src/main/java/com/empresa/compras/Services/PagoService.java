@@ -3,20 +3,24 @@ import com.empresa.compras.dtos.PagoRequestDTO;
 import com.empresa.compras.dtos.PagoResponseDTO;
 import com.empresa.compras.entity.OrdenCompra;
 import com.empresa.compras.entity.Pago;
+import com.empresa.compras.entity.PagoDetalle;
 import com.empresa.compras.mapper.PagoMapper;
+import com.empresa.compras.repository.PagoDetalleRepository;
 import com.empresa.compras.repository.PagoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import com.empresa.compras.repository.OrdenCompraRepository;
+
 @Service
 @RequiredArgsConstructor
 public class PagoService {
-
     private final PagoRepository pagoRepository;
+    private final PagoDetalleRepository pagoDetalleRepository;
     private final PagoMapper pagoMapper;
-    private final OrdenCompraRepository ordenCompraRepository; // 👈 Necesitas este repo
+    private final OrdenCompraRepository ordenCompraRepository;
 
     // Crear
     @Transactional
@@ -64,6 +68,21 @@ public class PagoService {
 
         return pagoMapper.toResponse(pagoRepository.save(pago));
     }
+    @Transactional
+    public void recalcularTotalPorDetalle(Long idDetalle) {
+        PagoDetalle det = pagoDetalleRepository.findById(idDetalle)
+                .orElseThrow(() -> new RuntimeException("Detalle no encontrado"));
+
+        Long idPago = det.getPago().getIdPago();
+
+        Double nuevoTotal = pagoDetalleRepository.sumByPago(idPago);
+
+        Pago pago = pagoRepository.findById(idPago).get();
+        pago.setMontoTotal(nuevoTotal);
+        pagoRepository.save(pago);
+    }
+
+
 
     // Eliminar
     @Transactional

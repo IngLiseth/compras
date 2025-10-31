@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/pagos-detalles")
@@ -36,6 +37,17 @@ public class PagoDetalleController {
     public ResponseEntity<PagoDetalleResponseDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(pagoDetalleService.buscarPorId(id));
     }
+    @PutMapping("/detalle/{idDetalle}")
+    public ResponseEntity<String> actualizarDetalle(
+            @PathVariable Long idDetalle,
+            @RequestParam Double montoParcial,
+            @RequestParam Long idMetodoPago) {
+
+        pagoDetalleService.actualizarDetalleYRecalcular(idDetalle, montoParcial, idMetodoPago);
+        return ResponseEntity.ok("Detalle actualizado ✅");
+    }
+
+
 
     // Actualizar detalle
     @PutMapping("/{id}")

@@ -1,5 +1,7 @@
 package com.empresa.compras.frontend;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,16 +24,36 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        // Acciones de los botones
+
+        String rol = ComprasApp.usuarioLogueadoRol;
+
+        // ✅ Controlar permisos según rol
+        if (rol != null) {
+
+            // Solo ADMIN puede gestionar Usuarios
+            if (!rol.equalsIgnoreCase("ADMINISTRADOR")) {
+                btnUsuarios.setDisable(true);
+                btnUsuarios.setStyle("-fx-opacity: 0.5;");
+            }
+
+            // Solo CONTADOR puede gestionar Pagos
+            if (!rol.equalsIgnoreCase("CONTADOR")) {
+                btnPagos.setDisable(true);
+                btnPagos.setStyle("-fx-opacity: 0.5;");
+            }
+        }
+
+        // ✅ Acciones de botones
         btnUsuarios.setOnAction(e -> mostrarVista("usuarios"));
         btnOrdenes.setOnAction(e -> mostrarVista("ordenes"));
-        // btnPagos.setOnAction(e -> mostrarVista("pagos"));
-        // btnRecepciones.setOnAction(e -> mostrarVista("recepciones"));
-        // btnInventarios.setOnAction(e -> mostrarVista("inventarios"));
+        btnPagos.setOnAction(e -> mostrarVista("pagos"));
+        btnRecepciones.setOnAction(e -> mostrarVista("recepciones"));
+        btnInventarios.setOnAction(e -> mostrarVista("inventarios"));
 
-        // ✅ Acción del botón de cerrar sesión
+        // ✅ Cerrar sesión
         btnLogout.setOnAction(e -> cerrarSesion());
     }
+
 
     private void mostrarVista(String nombreVista) {
         try {
@@ -48,7 +70,7 @@ public class MainController {
         }
     }
 
-    // ✅ Método corregido para cerrar sesión correctamente
+
     private void cerrarSesion() {
         try {
             // Limpia los datos del usuario logueado
@@ -75,4 +97,7 @@ public class MainController {
             System.err.println("❌ Error al cerrar sesión y volver al login.");
         }
     }
+
+
+
 }

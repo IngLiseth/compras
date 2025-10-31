@@ -19,4 +19,3 @@ public class PagoResponseDTO {
     private Long idOrden; // opcional, depende de lo que quieras mostrar
     private List<PagoDetalleResponseDTO> detalles;
 }
-

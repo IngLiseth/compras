@@ -4,9 +4,11 @@ import com.empresa.compras.dtos.PagoRequestDTO;
 import com.empresa.compras.dtos.PagoResponseDTO;
 import com.empresa.compras.entity.OrdenCompra;
 import com.empresa.compras.entity.Pago;
+import com.empresa.compras.entity.PagoDetalle;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Component
 public class PagoMapper {
@@ -22,22 +24,38 @@ public class PagoMapper {
         pago.setFecha(dto.getFecha());
         pago.setMontoTotal(dto.getMontoTotal());
         pago.setOrden(orden);
-        // aseguramos que la lista de detalles nunca sea null
-        pago.setDetalles(List.of());
-        return pago;
-    }
 
+        // ✅ Convertir los detalles
+        List<PagoDetalle> detalles = dto.getDetalles()
+                .stream()
+                .map(det -> {
+                    PagoDetalle d = new PagoDetalle();
+                    d.setMontoParcial(det.getMontoParcial()); // ✅ toma el campo del DTO
+                    d.setMetodoPago(detalleMapper.toEntityMetodo(det)); // ✅ buscar método
+                    d.setPago(pago); // 🔥 relación bidireccional
+                    return d;
+                })
+                .collect(Collectors.toList());
+
+        pago.setDetalles(detalles);
+        return pago;
+
+
+
+    }
     public PagoResponseDTO toResponse(Pago pago) {
         return new PagoResponseDTO(
                 pago.getIdPago(),
                 pago.getFecha(),
                 pago.getMontoTotal(),
-                pago.getOrden().getIdOrden(), // solo devolvemos el id de la orden
-                (pago.getDetalles() != null
-                        ? pago.getDetalles().stream()
+                pago.getOrden().getIdOrden(),
+                pago.getDetalles() != null
+                        ? pago.getDetalles()
+                        .stream()
                         .map(detalleMapper::toResponse)
                         .toList()
-                        : List.of())
+                        : List.of()
         );
     }
+
 }

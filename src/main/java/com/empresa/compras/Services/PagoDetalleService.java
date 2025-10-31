@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PagoDetalleService {
-
+    private final PagoDetalleRepository pagoDetalleRepository;
     private final PagoDetalleRepository detalleRepository;
     private final PagoRepository pagoRepository;
     private final MetodoPagoRepository metodoPagoRepository;
@@ -81,4 +81,42 @@ public class PagoDetalleService {
         }
         detalleRepository.deleteById(id);
     }
+    @Transactional
+    public void actualizarDetallePago(Long idDetalle, Double montoParcial, Long idMetodoPago) {
+        PagoDetalle det = pagoDetalleRepository.findById(idDetalle)
+                .orElseThrow(() -> new RuntimeException("Detalle no encontrado"));
+
+        // actualizar monto
+        det.setMontoParcial(montoParcial);
+
+        // actualizar método de pago
+        MetodoPago metodo = new MetodoPago();
+        metodo.setIdMetodoPago(idMetodoPago);
+        det.setMetodoPago(metodo);
+
+        // guardar cambios
+        pagoDetalleRepository.save(det);
+    }
+    @Transactional
+    public void actualizarDetalleYRecalcular(Long idDetalle, Double montoParcial, Long idMetodoPago) {
+        actualizarDetallePago(idDetalle, montoParcial, idMetodoPago);
+
+        // Obtener el pago al que pertenece este detalle
+        PagoDetalle det = pagoDetalleRepository.findById(idDetalle)
+                .orElseThrow(() -> new RuntimeException("Detalle no encontrado"));
+
+        Long idPago = det.getPago().getIdPago();
+
+        // Recalcular total sumando los detalles
+        Double nuevoTotal = pagoDetalleRepository.sumByPago(idPago);
+
+        Pago pago = pagoRepository.findById(idPago)
+                .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
+
+        pago.setMontoTotal(nuevoTotal);
+        pagoRepository.save(pago);
+    }
+
+
+
 }

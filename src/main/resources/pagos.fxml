@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.empresa.compras.frontend.PagosController">
+
+    <top>
+        <Label text="Gestión de Pagos"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 10"/>
+    </top>
+
+    <center>
+        <VBox spacing="12">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <!-- ✅ Fila Orden | Método | Monto | Botón pegado -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <VBox spacing="5">
+                    <Label text="Orden de Compra:"/>
+                    <ComboBox fx:id="cmbOrden" prefWidth="150"/>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Método de Pago:"/>
+                    <ComboBox fx:id="cmbMetodo" prefWidth="150"/>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Monto Parcial:"/>
+                    <TextField fx:id="txtMontoParcial" promptText="Ej: 150000" prefWidth="150"/>
+                </VBox>
+
+                <!-- Botón al lado, no separado -->
+                <VBox alignment="BOTTOM_CENTER">
+                    <Button fx:id="btnAgregarDetalle" text="➕ Agregar Detalle"
+                            style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Tabla de Detalles -->
+            <Label text="Detalles del Pago"/>
+            <TableView fx:id="tblDetalles" prefHeight="160">
+                <columns>
+                    <TableColumn fx:id="colMetodo" text="Método Pago" prefWidth="200"/>
+                    <TableColumn fx:id="colMonto" text="Monto Parcial" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+            <!-- Total y botón registrar -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Label text="Monto Total:"/>
+                <TextField fx:id="txtTotal" prefWidth="120" editable="false"/>
+                <Button fx:id="btnRegistrarPago" text="💾 Registrar Pago"/>
+                <Label fx:id="lblMensaje" textFill="red"/>
+            </HBox>
+
+            <Separator/>
+
+            <!-- Tabla de pagos realizados -->
+            <Label text="Pagos Realizados"/>
+            <TableView fx:id="tblPagos" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="colPagoId" text="ID Pago" prefWidth="80"/>
+                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="120"/>
+                    <TableColumn fx:id="colOrden" text="ID Orden" prefWidth="120"/>
+                    <TableColumn fx:id="colTotal" text="Monto Total" prefWidth="140"/>
+                </columns>
+            </TableView>
+
+            <!-- Botones CRUD -->
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button fx:id="btnActualizar" text="✏ Actualizar"/>
+                <Button fx:id="btnEliminar" text="🗑 Eliminar"/>
+                <Button fx:id="btnVerDetalles" text="👁 Ver Detalles"/>
+                <Button fx:id="btnLimpiar" text="🧹 Limpiar"/>
+                <Button fx:id="btnAtras" text="⬅ Atrás"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
