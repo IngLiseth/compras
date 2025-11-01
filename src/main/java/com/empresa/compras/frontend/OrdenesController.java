@@ -19,6 +19,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.*;
+import com.empresa.compras.frontend.Apiconfig;
 
 public class OrdenesController {
 
@@ -112,7 +113,8 @@ public class OrdenesController {
 
     @FXML
     private void crearOrden() {
-        enviarOrden("POST", "http://localhost:8080/api/ordenes");
+
+        enviarOrden("POST", Apiconfig.BASE_URL + "/ordenes");
     }
 
     @FXML
@@ -121,7 +123,7 @@ public class OrdenesController {
             lblMensaje.setText("⚠ Selecciona una orden para actualizar");
             return;
         }
-        enviarOrden("PUT", "http://localhost:8080/api/ordenes/" + ordenSeleccionadaId);
+        enviarOrden("PUT", Apiconfig.BASE_URL + "/ordenes/" + ordenSeleccionadaId);
     }
 
     @FXML
@@ -132,7 +134,7 @@ public class OrdenesController {
         }
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/ordenes/" + ordenSeleccionadaId))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/ordenes/" + ordenSeleccionadaId))
                     .DELETE().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() == 204) {
@@ -225,7 +227,7 @@ public class OrdenesController {
     private void cargarOrdenes() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/ordenes"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/ordenes"))
                     .GET().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() == 200) {
@@ -242,7 +244,7 @@ public class OrdenesController {
         try {
             ordenSeleccionadaId = idOrden;
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/ordenes/" + idOrden))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/ordenes/" + idOrden))
                     .GET().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() != 200) {
@@ -310,7 +312,7 @@ public class OrdenesController {
     private void cargarUsuarios() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/usuarios"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/usuarios"))
                     .GET().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() == 200) {
@@ -325,7 +327,7 @@ public class OrdenesController {
     private void cargarProveedores() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/proveedores"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/proveedores"))
                     .GET().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() == 200) {
@@ -340,7 +342,7 @@ public class OrdenesController {
     private void cargarEstados() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/estados-orden"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/estados-orden"))
                     .GET().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() == 200) {
@@ -355,7 +357,7 @@ public class OrdenesController {
     private void cargarInsumos() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/insumos"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/insumos"))
                     .GET().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() == 200) {

@@ -50,7 +50,7 @@ public class PagosController {
     // ==================== Infra ====================
     private final HttpClient client = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
-    private static final String BASE = "http://localhost:8080/api";
+    //private static final String BASE = "http://localhost:8080/api";
 
     // Detalles que se muestran/arman en la tabla superior
     private final ObservableList<DetallePagoFX> detalles = FXCollections.observableArrayList();
@@ -113,7 +113,7 @@ public class PagosController {
     private void cargarOrdenes() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE + "/ordenes"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/ordenes"))
                     .GET().build();
 
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
@@ -132,7 +132,7 @@ public class PagosController {
     private void cargarMetodos() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE + "/metodos-pago"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/metodos-pago"))
                     .GET().build();
 
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
@@ -158,7 +158,7 @@ public class PagosController {
     private void cargarPagos() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE + "/pagos"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/pagos"))
                     .GET().build();
 
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
@@ -244,7 +244,7 @@ public class PagosController {
 
         try {
             // 🔧 Endpoint correcto del backend:
-            String url = BASE + "/pagos-detalles/detalle/" + detalleSeleccionadoId
+            String url = Apiconfig.BASE_URL + "/pagos-detalles/detalle/" + detalleSeleccionadoId
                     + "?montoParcial=" + monto
                     + "&idMetodoPago=" + idMetodo;
 
@@ -325,7 +325,7 @@ public class PagosController {
             String json = mapper.writeValueAsString(body);
 
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE + "/pagos"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/pagos"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(json))
                     .build();
@@ -350,7 +350,7 @@ public class PagosController {
         }
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE + "/pagos/" + sel.getIdPago()))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/pagos/" + sel.getIdPago()))
                     .GET().build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
 
@@ -382,7 +382,7 @@ public class PagosController {
         }
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE + "/pagos/" + sel.getIdPago()))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/pagos/" + sel.getIdPago()))
                     .DELETE().build();
             client.send(req, HttpResponse.BodyHandlers.ofString());
             cargarPagos();
@@ -410,7 +410,7 @@ public class PagosController {
         if (idPago == null) return; // protección
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE + "/pagos/" + idPago))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/pagos/" + idPago))
                     .GET().build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

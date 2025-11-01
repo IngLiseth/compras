@@ -60,7 +60,7 @@ public class UsuariosController {
     private void cargarUsuarios() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/usuarios"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/usuarios"))
                     .GET()
                     .build();
 
@@ -99,7 +99,7 @@ public class UsuariosController {
                 """.formatted(txtNombre.getText(), txtEmail.getText(), txtUsername.getText(), txtPassword.getText());
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/usuarios"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/usuarios"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(json))
                     .build();
@@ -138,7 +138,7 @@ public class UsuariosController {
                     txtPassword.getText().isEmpty() ? usuarioSeleccionado.getUsername() : txtPassword.getText());
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/usuarios/" + usuarioSeleccionado.getIdUsuario()))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/usuarios/" + usuarioSeleccionado.getIdUsuario()))
                     .header("Content-Type", "application/json")
                     .PUT(HttpRequest.BodyPublishers.ofString(json))
                     .build();
@@ -166,7 +166,8 @@ public class UsuariosController {
         }
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/usuarios/" + usuario.getIdUsuario()))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/usuarios/" + usuario.getIdUsuario()))
+
                     .DELETE()
                     .build();
 
@@ -213,7 +214,7 @@ public class UsuariosController {
     private void cargarRoles() {
         try {
             HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/roles"))
+                    .uri(URI.create(Apiconfig.BASE_URL + "/roles"))
                     .GET()
                     .build();
             HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());

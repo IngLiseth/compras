@@ -37,7 +37,7 @@ public class LoginController {
         String json = String.format("{\"username\":\"%s\",\"passwordHash\":\"%s\"}", usuario, password);
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/auth/login"))
+                .uri(URI.create(Apiconfig.BASE_URL + "/auth/login"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
