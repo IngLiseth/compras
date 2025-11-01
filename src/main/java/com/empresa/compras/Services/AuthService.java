@@ -12,27 +12,13 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final UsuarioRepository usuarioRepository;
-    private final RolRepository rolRepository; // ✅ agregar
 
-    public AuthService(UsuarioRepository usuarioRepository, RolRepository rolRepository) {
+
+    public AuthService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.rolRepository = rolRepository;
-    }
-    @PostConstruct
-    public void initAdmin() {
-        if (usuarioRepository.count() == 0) {
-            Usuario admin = new Usuario();
-            admin.setNombre("Admin");
-            admin.setEmail("admin@test.com");
-            admin.setUsername("admin");
-            admin.setPasswordHash("123"); // si usas BCrypt me dices y lo pongo
-            admin.setActivo(true);
-            admin.setRol(rolRepository.findById(1L).orElse(null)); // rol admin = 1
 
-            usuarioRepository.save(admin);
-            System.out.println("✅ Usuario admin creado automáticamente");
-        }
     }
+
     public LoginResponseDTO login(LoginRequestDTO dto) {
         Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(dto.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
